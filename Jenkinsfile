@@ -1,34 +1,22 @@
-// Example of Jenkins pipeline script
-
 pipeline {
-    agent {
-        any
-    }
+    agent any
 
     environment {
         IMAGE = 'gcp-devops'
         TAG = 'latest'
-
     }
 
     stages {
-        stage("build") {
+        stage("Build") {
            steps {
-              sh "env"
+              sh "docker build --rm --no-cache --tag \$IMAGE:\$TAG ."
            }
         }
-/*
-    post {
-      success {
-        withCredentials([usernamePassword(credentialsId: 'github-nhsy-cloudbees', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-          sh 'curl -X POST --user $USERNAME:$PASSWORD --data  "{\\"state\\": \\"success\\", \\"target_url\\": \\"${BUILD_URL}\\"}" --url $GITHUB_API_URL/statuses/$GIT_COMMIT'
-        }
-      }
-      failure {
-        withCredentials([usernamePassword(credentialsId: 'github-nhsy-cloudbees', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-          sh 'curl -X POST --user $USERNAME:$PASSWORD --data  "{\\"state\\": \\"failure\\", \\"target_url\\": \\"${BUILD_URL}\\"}" --url $GITHUB_API_URL/statuses/$GIT_COMMIT'
-        }
-      }
     }
-*/
+
+    post {
+        success {
+            sh "docker image prune --filter=\"label=name=\$IMAGE\" -f"
+        }
+    }
 }

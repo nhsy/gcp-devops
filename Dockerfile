@@ -18,20 +18,22 @@ RUN apk --no-cache add \
         libc6-compat \
         openssh-client \
         git \
-    && wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
-    tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
-    rm google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
-    ln -s /lib /lib64 && \
-    gcloud config set core/disable_usage_reporting true && \
-    gcloud config set component_manager/disable_update_check true && \
-    gcloud config set metrics/environment github_docker_image && \
-    gcloud components install kubectl && \
-    gcloud components install docker-credential-gcr --quiet
+        jq
+
+RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+  tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+  rm google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+  ln -s /lib /lib64 && \
+  gcloud config set core/disable_usage_reporting true && \
+  gcloud config set component_manager/disable_update_check true && \
+  gcloud config set metrics/environment github_docker_image && \
+  gcloud components install kubectl && \
+  gcloud components install docker-credential-gcr --quiet
 
 RUN wget -q https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
-    tar -xzf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
-    mv linux-amd64/helm /usr/bin && \
-    rm -rf linux-amd64
+  tar -xzf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
+  mv linux-amd64/helm /usr/bin && \
+  rm -rf linux-amd64
 
 RUN wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
   unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \

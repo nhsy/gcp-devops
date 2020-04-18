@@ -18,7 +18,8 @@ RUN apk --no-cache add \
         libc6-compat \
         openssh-client \
         git \
-        jq
+        jq \
+        vim
 
 RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
   tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \

@@ -9,7 +9,10 @@ ENV HELM_VERSION=3.0.2
 ENV TERRAFORM_VALIDATOR_VERSION=2020-03-05
 ENV CLOUDSDK_PYTHON=python3
 
-ENV PATH /google-cloud-sdk/bin:$PATH
+ENV PATH /usr/lib/google-cloud-sdk/bin:$PATH
+ENV TF_PLUGIN_CACHE_DIR=/root/.terraform.d/plugin-cache
+
+WORKDIR /root
 
 RUN \
   apk --no-cache add \
@@ -22,10 +25,11 @@ RUN \
     openssh-client \
     git \
     jq \
-    vim && \
+    vim \
+    unzip && \
   \
   wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
-  tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+  tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz -C /usr/lib/ && \
   rm google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
   ln -s /lib /lib64 && \
   gcloud config set core/disable_usage_reporting true && \
@@ -37,6 +41,7 @@ RUN \
   tar -xzf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
   mv linux-amd64/helm /usr/bin && \
   rm -rf linux-amd64 && \
+  rm helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
   \
   wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
   unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
@@ -55,3 +60,11 @@ RUN \
   rm -rf /tmp/* && \
   rm -rf /var/cache/apk/* && \
   rm -rf /var/tmp/*
+
+# Cache terraform providers
+COPY terraform-providers.sh .
+RUN \
+  mkdir -p ${TF_PLUGIN_CACHE_DIR}/linux_amd64 && \
+  chmod +x ./terraform-providers.sh && \
+  ./terraform-providers.sh && \
+  rm ./terraform-providers.sh

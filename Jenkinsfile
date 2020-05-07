@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
     environment {
         IMAGE = 'gcp-devops'
         TAG = 'latest'

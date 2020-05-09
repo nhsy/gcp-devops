@@ -17,7 +17,7 @@ pipeline {
         stage("Build") {
             steps {
                 //sh "docker build --rm --no-cache --tag $IMAGE:$TAG --tag $REGISTRY/$IMAGE:$TAG ."
-                sh "docker build --rm --tag $IMAGE:$TAG --tag $REGISTRY/$IMAGE:$TAG --tag $REGISTRY/$IMAGE:0.$BUILD_ID ."
+                sh "docker build --rm --no-cache --tag $IMAGE:$TAG --tag $REGISTRY/$IMAGE:$TAG ."
             }
         }
         stage("Push") {
@@ -26,7 +26,6 @@ pipeline {
             }
             steps {
                 withDockerRegistry([ credentialsId: 'dockerhub', url: '' ]) {
-                    sh "docker push $REGISTRY/$IMAGE:0.$BUILD_ID"
                     sh "docker push $REGISTRY/$IMAGE:$TAG"
                 }
             }

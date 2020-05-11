@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM ubuntu:18.04
 
 LABEL name=gcp-devops
 
@@ -12,19 +12,20 @@ ENV PATH /usr/lib/google-cloud-sdk/bin:$PATH
 ENV TF_PLUGIN_CACHE_DIR=/opt/terraform/plugin-cache
 
 RUN \
-  apk --no-cache add \
+  apt-get update && \
+  apt-get install -qqy \
     curl \
     python3 \
-    py3-pip \
-    py3-crcmod \
+    python3-pip \
+    python3-crcmod \
     bash \
     groff \
     less \
-    libc6-compat \
     openssh-client \
     git \
     jq \
     vim \
+    wget \
     unzip \
     && \
   \
@@ -37,7 +38,12 @@ RUN \
   gcloud config set core/disable_usage_reporting true && \
   gcloud config set component_manager/disable_update_check true && \
   gcloud config set metrics/environment github_docker_image && \
-  gcloud components install kubectl docker-credential-gcr --quiet
+  gcloud components install kubectl docker-credential-gcr --quiet && \
+  \
+  # Cleanup \
+  rm -rf /tmp/* && \
+  rm -rf /var/cache/apt/* && \
+  rm -rf /var/tmp/*
 
 RUN \
   wget -q -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
@@ -55,12 +61,7 @@ RUN \
   \
   terraform version && \
   terragrunt -version && \
-  terraform-validator version && \
-  \
-  # Cleanup \
-  rm -rf /tmp/* && \
-  rm -rf /var/cache/apk/* && \
-  rm -rf /var/tmp/*
+  terraform-validator version
 
 # Cache terraform providers
 COPY terraform-providers.sh .

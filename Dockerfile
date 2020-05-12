@@ -63,11 +63,16 @@ RUN \
   terragrunt -version && \
   terraform-validator version
 
-# Cache terraform providers
-COPY terraform-providers.sh .
+# Customizations
+COPY *.sh /tmp/
 RUN \
   mkdir -p ${TF_PLUGIN_CACHE_DIR}/linux_amd64 && \
-  chmod +x ./terraform-providers.sh && \
-  ./terraform-providers.sh && \
+  chmod +x /tmp/10-terraform-providers.sh && \
+  /tmp/10-terraform-providers.sh && \
   chmod -R 777 ${TF_PLUGIN_CACHE_DIR} && \
-  rm ./terraform-providers.sh
+  \
+  chmod +x /tmp/20-aliases.sh && \
+  /tmp/20-aliases.sh && \
+  \
+  # Cleanup \
+  rm -rf /tmp/*

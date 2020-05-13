@@ -18,6 +18,7 @@ RUN \
     py3-pip \
     py3-crcmod \
     bash \
+    bash-completion \
     groff \
     less \
     libc6-compat \
@@ -73,7 +74,8 @@ RUN \
   . /tmp/10-terraform-providers.sh && \
   chmod -R 777 ${TF_PLUGIN_CACHE_DIR} && \
   \
-  . /tmp/20-aliases.sh && \
+  . /tmp/20-bashrc.sh && \
   \
   # Cleanup \
-  rm -rf /tmp/*
+  rm -rf /tmp/* && \
+  rm ~/.wget-hsts

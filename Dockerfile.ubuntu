@@ -69,12 +69,10 @@ COPY *.sh /tmp/
 RUN \
   adduser
   mkdir -p ${TF_PLUGIN_CACHE_DIR}/linux_amd64 && \
-  chmod +x /tmp/10-terraform-providers.sh && \
-  /tmp/10-terraform-providers.sh && \
+  . /tmp/10-terraform-providers.sh && \
   chmod -R 777 ${TF_PLUGIN_CACHE_DIR} && \
   \
-  chmod +x /tmp/20-aliases.sh && \
-  /tmp/20-aliases.sh && \
+   ./tmp/20-bashrc.sh && \
   \
   # Cleanup \
   rm -rf /tmp/*

@@ -18,6 +18,11 @@ alias tfd='terraform destroy \$*'
 alias tfo='terraform output'
 
 alias k='kubectl \$*'
+alias ka='kubectl apply \$*'
+alias kd='kubectl describe \$*'
+alias kg='kubectl get \$*'
+alias kl='kubectl logs \$*'
+alias kr='kubectl run \$*'
 
 EOF
 fi

@@ -79,3 +79,5 @@ RUN \
   # Cleanup \
   rm -rf /tmp/* && \
   rm ~/.wget-hsts
+
+ENTRYPOINT ["/bin/bash"]

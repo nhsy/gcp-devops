@@ -15,6 +15,9 @@ alias tfv='terraform validate'
 alias tfp='terraform plan \$*'
 alias tfa='terraform apply \$*'
 alias tfd='terraform destroy \$*'
+alias tfo='terraform output'
+
+alias k='kubectl \$*'
 
 EOF
 fi

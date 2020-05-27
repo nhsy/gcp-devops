@@ -29,6 +29,7 @@ RUN \
     vim \
     wget \
     unzip \
+    make \
     && \
   \
   pip3 install --upgrade pip && \

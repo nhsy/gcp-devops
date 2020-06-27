@@ -2,9 +2,10 @@ FROM alpine:latest
 
 LABEL name=gcp-devops
 
-ENV CLOUD_SDK_VERSION=292.0.0
-ENV TERRAFORM_VERSION=0.12.25
-ENV TERRAGRUNT_VERSION=0.23.10
+ENV GCLOUD_VERSION=298.0.0
+ENV PACKER_VERSION=1.6.0
+ENV TERRAFORM_VERSION=0.12.28
+ENV TERRAGRUNT_VERSION=0.23.29
 ENV TERRAFORM_VALIDATOR_VERSION=2020-03-05
 ENV CLOUDSDK_PYTHON=python3
 
@@ -34,7 +35,7 @@ RUN \
   \
   pip3 install --upgrade pip && \
   \
-  wget -q -O /tmp/google-cloud-sdk.tgz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+  wget -q -O /tmp/google-cloud-sdk.tgz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz && \
   tar xzf /tmp/google-cloud-sdk.tgz -C /usr/lib/ && \
   rm /tmp/google-cloud-sdk.tgz && \
   ln -s /lib /lib64 && \
@@ -62,9 +63,15 @@ RUN \
   chmod +x /tmp/terraform-validator && \
   mv /tmp/terraform-validator /usr/local/bin && \
   \
+  wget -O /tmp/packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && \
+  unzip /tmp/packer.zip -d /tmp && \
+  chmod +x /tmp/packer && \
+  mv /tmp/packer /usr/local/bin && \
+  \
   terraform version && \
   terragrunt -version && \
-  terraform-validator version
+  terraform-validator version && \
+  packer version
 
 # Customisations
 COPY *.sh /tmp/

@@ -14,23 +14,24 @@ ENV TF_PLUGIN_CACHE_DIR=/opt/terraform/plugin-cache
 
 RUN \
   apk --no-cache add \
+    ansible \
+    bash \
+    bash-completion \
     curl \
+    groff \
+    git \
+    jq \
+    less \
+    libc6-compat \
+    make \
+    openssh-client \
     python3 \
     py3-pip \
     py3-crcmod \
-    bash \
-    bash-completion \
-    groff \
-    less \
-    libc6-compat \
-    openssh-client \
-    git \
-    jq \
     tree \
     vim \
     wget \
     unzip \
-    make \
     && \
   \
   pip3 install --upgrade pip && \
@@ -68,6 +69,7 @@ RUN \
   chmod +x /tmp/packer && \
   mv /tmp/packer /usr/local/bin && \
   \
+  ansible --version && \
   terraform version && \
   terragrunt -version && \
   terraform-validator version && \

@@ -52,7 +52,7 @@ RUN \
 
 RUN \
   wget -q -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-  unzip /tmp/terraform.zip -d /tmp && \
+  unzip -q /tmp/terraform.zip -d /tmp && \
   chmod +x /tmp/terraform && \
   mv /tmp/terraform /usr/local/bin && \
   \
@@ -64,8 +64,8 @@ RUN \
   chmod +x /tmp/terraform-validator && \
   mv /tmp/terraform-validator /usr/local/bin && \
   \
-  wget -O /tmp/packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && \
-  unzip /tmp/packer.zip -d /tmp && \
+  wget -q -O /tmp/packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && \
+  unzip -q /tmp/packer.zip -d /tmp && \
   chmod +x /tmp/packer && \
   mv /tmp/packer /usr/local/bin && \
   \

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ ! -f ~/.bashrc ]; then
 cat << EOF > ~/.bashrc
 export PS1='\u@\h:\W \$ '

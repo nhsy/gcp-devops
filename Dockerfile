@@ -2,15 +2,15 @@ FROM alpine:latest
 
 LABEL name=gcp-devops
 
-ARG GCLOUD_VERSION=303.0.0
-ARG PACKER_VERSION=1.6.0
-ARG TERRAFORM_VERSION=0.12.29
-ARG TERRAGRUNT_VERSION=0.23.31
+ARG GCLOUD_VERSION=319.0.0
+ARG TERRAFORM_VERSION=0.13.5
+ARG TERRAGRUNT_VERSION=0.26.4
+ARG PACKER_VERSION=1.6.5
 ARG TERRAFORM_VALIDATOR_VERSION=2020-03-05
 
 ENV CLOUDSDK_PYTHON=python3
 ENV PATH /usr/lib/google-cloud-sdk/bin:$PATH
-ENV TF_PLUGIN_CACHE_DIR=/opt/terraform/plugin-cache
+ENV TF_PLUGIN_CACHE_DIR=/opt/terraform/plugins
 
 RUN \
   apk --no-cache add \
@@ -43,7 +43,7 @@ RUN \
   gcloud config set core/disable_usage_reporting true && \
   gcloud config set component_manager/disable_update_check true && \
   gcloud config set metrics/environment github_docker_image && \
-  gcloud components install kubectl docker-credential-gcr --quiet && \
+  gcloud components install beta kubectl docker-credential-gcr --quiet && \
   \
   # Cleanup \
   rm -rf /tmp/* && \

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-for version in 3.19.0 3.29.0 3.32.0 3.33.0
+for version in 3.49.0
 do
   echo "Downloading google provider version: $version"
   wget -q https://releases.hashicorp.com/terraform-provider-google/${version}/terraform-provider-google_${version}_linux_amd64.zip

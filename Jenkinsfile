@@ -25,7 +25,7 @@ pipeline {
             }
             steps {
                 withDockerRegistry([ credentialsId: 'dockerhub', url: '' ]) {
-                    sh "docker push $REGISTRY/$IMAGE:$TAG"
+                    sh "docker push $REGISTRY/$IMAGE:latest"
                     sh "docker push $REGISTRY/$IMAGE:0.13"
                     sh "docker push $REGISTRY/$IMAGE:0.12"
 

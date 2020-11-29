@@ -18,6 +18,9 @@ pipeline {
             steps {
                 //sh "docker build --rm --no-cache --tag $IMAGE:$TAG --tag $REGISTRY/$IMAGE:$TAG ."
                 sh "docker build --rm --no-cache --tag $IMAGE:$TAG --tag $REGISTRY/$IMAGE:$TAG ."
+                sh "docker build --rm --no-cache --tag $IMAGE:0.13 --tag $REGISTRY/$IMAGE:0.13 ."
+                sh "docker build --rm --no-cache --build-arg TERRAFORM_VERSION=0.12.29 --tag $IMAGE:0.12 --tag $REGISTRY/$IMAGE:0.12 ."
+                
             }
         }
         stage("Push") {
@@ -27,6 +30,9 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: 'dockerhub', url: '' ]) {
                     sh "docker push $REGISTRY/$IMAGE:$TAG"
+                    sh "docker push $REGISTRY/$IMAGE:0.13"
+                    sh "docker push $REGISTRY/$IMAGE:0.12"
+
                 }
             }
         }

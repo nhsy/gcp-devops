@@ -24,7 +24,7 @@ stages:
   displayName: Build images
   jobs:  
   - job: Build
-    displayName: Build terraform 0.12.x image
+    displayName: Build 0.12.x image
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -36,19 +36,17 @@ stages:
         command: 'build'
         arguments: '--build-arg TERRAFORM_VERSION=$(tf_0.12_version)'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          '0.12'
+        tags: 0.12
     - task: Docker@2
       displayName: Push
       inputs:
         containerRegistry: $(registry)
         repository: $(repository)
         command: 'build'
-        tags: |
-          '0.12'
+        tags: 0.12
 
   - job: Build2
-    displayName: Build terraform 0.13.x image
+    displayName: Build 0.13.x image
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -60,19 +58,17 @@ stages:
         command: 'build'
         arguments: '--build-arg TERRAFORM_VERSION=$(tf_0.13_version)'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          '0.13'
+        tags: 0.13
     - task: Docker@2
       displayName: Push
       inputs:
         containerRegistry: $(registry)
         repository: $(repository)
         command: 'build'
-        tags: |
-          '0.13'
+        tags: 0.13
 
   - job: Build3
-    displayName: Build terraform 0.14.x image
+    displayName: Build 0.14.x image
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -84,13 +80,11 @@ stages:
         command: 'build'
         arguments: '--build-arg TERRAFORM_VERSION=$(tf_0.14_version)'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          '0.14'
+        tags: 0.14
     - task: Docker@2
       displayName: Push
       inputs:
         containerRegistry: $(registry)
         repository: $(repository)
         command: 'build'
-        tags: |
-          '0.14'
+        tags: 0.14

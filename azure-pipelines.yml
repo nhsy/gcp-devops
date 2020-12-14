@@ -47,7 +47,7 @@ stages:
         tags: |
           $(tf_0.12_version)
 
-  - job: Build
+  - job: Build2
     displayName: Build terraform 0.13.x image
     pool:
       vmImage: 'ubuntu-latest'

@@ -17,7 +17,7 @@ variables:
   repository: 'dizzyplan/gcp-devops'
   tf_0.12_version: '0.12.29'
   tf_0.13_version: '0.13.5'
-  tf_0.14_version: '0.14.1'
+  tf_0.14_version: '0.14.2'
 
 stages:
 - stage: Build
@@ -61,7 +61,7 @@ stages:
         arguments: '--build-arg TERRAFORM_VERSION=$(tf_0.13_version)'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
-          $(tf_0.13_version)
+          '0.12'
     - task: Docker@2
       displayName: Push
       inputs:
@@ -69,4 +69,28 @@ stages:
         repository: $(repository)
         command: 'build'
         tags: |
-          $(tf_0.13_version)
+          '0.13'
+
+  - job: Build3
+    displayName: Build terraform 0.14.x image
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build
+      inputs:
+        containerRegistry: $(registry)
+        repository: $(repository)
+        command: 'build'
+        arguments: '--build-arg TERRAFORM_VERSION=$(tf_0.14_version)'
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          '0.14'
+    - task: Docker@2
+      displayName: Push
+      inputs:
+        containerRegistry: $(registry)
+        repository: $(repository)
+        command: 'build'
+        tags: |
+          '0.14'

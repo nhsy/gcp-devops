@@ -21,9 +21,12 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build image
       inputs:
-        command: build
+        containerRegistry: 'dockerhub-nhsy'
+        repository: 'gcp-devops'
+        command: 'buildAndPush'
+
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)

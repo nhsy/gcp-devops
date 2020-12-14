@@ -24,7 +24,7 @@ stages:
   displayName: Build images
   jobs:  
   - job: Build
-    displayName: Build terraform 0.12.x image
+    displayName: Build image
     pool:
       vmImage: 'ubuntu-latest'
     steps:

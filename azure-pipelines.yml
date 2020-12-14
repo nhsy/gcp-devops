@@ -15,13 +15,6 @@ trigger:
     include:
       - master
 
-variables:
-  registry: 'dockerhub'
-  repository: 'dizzyplan/gcp-devops'
-  tf_0.12_version: '0.12.29'
-  tf_0.13_version: '0.13.5'
-  tf_0.14_version: '0.14.2'
-
 stages:
 - stage: Build
   displayName: Build images

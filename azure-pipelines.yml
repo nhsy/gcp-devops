@@ -48,7 +48,7 @@ stages:
           $(tf_0.12_version)
 
   - job: Build
-    displayName: Build terraform 0.12.x image
+    displayName: Build terraform 0.13.x image
     pool:
       vmImage: 'ubuntu-latest'
     steps:

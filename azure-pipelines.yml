@@ -24,7 +24,7 @@ stages:
       displayName: Build image
       inputs:
         containerRegistry: 'dockerhub-nhsy'
-        repository: 'gcp-devops'
+        repository: 'dizzyplan/gcp-devops'
         command: 'buildAndPush'
 
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'

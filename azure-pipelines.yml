@@ -7,10 +7,16 @@ trigger:
   branches:
     include:
       - master
-      - azure-*
-
 resources:
 - repo: self
+
+schedules:
+- cron: "0 12 * * 0"
+  displayName: Weekly Sunday build
+  branches:
+    include:
+    - master
+  always: true
 
 variables:
   registry: 'dockerhub-nhsy'

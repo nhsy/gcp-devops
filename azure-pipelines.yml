@@ -42,7 +42,7 @@ stages:
       inputs:
         containerRegistry: $(registry)
         repository: $(repository)
-        command: 'build'
+        command: 'push'
         tags: 0.12
 
   - job: Build2
@@ -64,7 +64,7 @@ stages:
       inputs:
         containerRegistry: $(registry)
         repository: $(repository)
-        command: 'build'
+        command: 'push'
         tags: 0.13
 
   - job: Build3
@@ -86,5 +86,5 @@ stages:
       inputs:
         containerRegistry: $(registry)
         repository: $(repository)
-        command: 'build'
+        command: 'push'
         tags: 0.14

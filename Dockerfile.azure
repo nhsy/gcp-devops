@@ -7,6 +7,7 @@ ARG GCLOUD_VERSION=320.0.0
 ARG TERRAFORM_VERSION=0.14.2
 ARG TERRAGRUNT_VERSION=0.26.7
 ARG PACKER_VERSION=1.6.5
+ARG VAULT_VERSION=1.6.0
 
 ENV CLOUDSDK_PYTHON=python3
 ENV PATH /usr/lib/google-cloud-sdk/bin:$PATH
@@ -56,24 +57,30 @@ RUN \
 
 RUN \
   wget -q -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-  unzip -q /tmp/terraform.zip -d /tmp && \
-  chmod +x /tmp/terraform && \
-  mv /tmp/terraform /usr/local/bin && \
+  unzip -q /tmp/terraform.zip -d /usr/local/bin && \
+  chmod +x /usr/local/bin/terraform && \
   \
   wget -q -O /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 && \
   chmod +x /tmp/terragrunt && \
   mv /tmp/terragrunt /usr/local/bin && \
   \
   wget -q -O /tmp/packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && \
-  unzip -q /tmp/packer.zip -d /tmp && \
-  chmod +x /tmp/packer && \
-  mv /tmp/packer /usr/local/bin && \
+  unzip -q /tmp/packer.zip -d /usr/local/bin && \
+  chmod +x /usr/local/bin/packer && \
+  \
+  wget -qO /tmp/vault.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
+  unzip -q /tmp/vault.zip -d /usr/local/bin && \
+  chmod +x /usr/local/bin/vault && \
   \
   mkdir -p ${TF_PLUGIN_CACHE_DIR}/linux_amd64 && \
   ansible --version && \
   terraform version && \
   terragrunt -version && \
-  packer version
+  packer version && \
+  vault version && \
+  \
+  # Cleanup \
+  rm -rf /tmp/*
 
 # Customisations
 COPY *.sh /tmp/

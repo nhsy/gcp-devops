@@ -74,7 +74,10 @@ RUN \
   terraform version && \
   terragrunt -version && \
   #terraform-validator version && \
-  packer version
+  packer version && \
+  \
+  # Cleanup \
+  rm -rf /tmp/*
 
 # Customisations
 COPY *.sh /tmp/

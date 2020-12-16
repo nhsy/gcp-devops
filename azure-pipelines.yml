@@ -96,3 +96,30 @@ stages:
         tags: |
           0.14
           $(tf_0.14_version)
+
+
+  - job: Build4
+    displayName: Build azure 0.14.x image
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: Docker@2
+        displayName: Build
+        inputs:
+          containerRegistry: $(registry)
+          repository: $(repository)
+          command: 'build'
+          arguments: '--build-arg TERRAFORM_VERSION=$(tf_0.14_version)'
+          dockerfile: '$(Build.SourcesDirectory)/Dockerfile.azure'
+          tags: |
+            0.14-azure
+            $(tf_0.14_version)-azure
+      - task: Docker@2
+        displayName: Push
+        inputs:
+          containerRegistry: $(registry)
+          repository: $(repository)
+          command: 'push'
+          tags: |
+            0.14-azure
+            $(tf_0.14_version)-azure

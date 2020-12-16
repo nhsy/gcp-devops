@@ -85,6 +85,8 @@ RUN \
   \
   . /tmp/20-bashrc.sh && \
   \
+  echo "Set disable_coredump false" >> /etc/sudo.conf && \
+  \
   # Cleanup \
   rm -rf /tmp/* && \
   rm ~/.wget-hsts
